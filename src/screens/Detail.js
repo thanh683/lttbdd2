@@ -82,8 +82,7 @@ const Detail = ({ route }) => {
         >
           {productDetail?.description}
         </Text>
-        {/* <TouchableOpacity onPress={() => dispatch(addToCart({ item: { ...productDetail, count: 1 } }))}> */}
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => addToCart(productDetail?.id, 1, productDetail?.price)}>
         <View style={styles.buyBtn}>
           <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>ADD TO CART</Text>
         </View>

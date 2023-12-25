@@ -1,63 +1,89 @@
-// // cartSlice.js
-// import { createSlice } from "@reduxjs/toolkit";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// export const cartSlice = createSlice({
-//   name: "cart",
-//   initialState: {
-//     items: [],
-//   },
-//   reducers: {
-//     addToCart: (state, action) => {
-//       const { item } = action.payload;
-//       const existingItemIndex = state.items.findIndex((i) => i.id === item.id);
-//       if (existingItemIndex === -1) {
-//         state.items.push({ ...item, count: 1 });
-//       } else {
-//         state.items[existingItemIndex].count++;
-//       }
+const KEY_CART_ITEMS = "cartItems";
 
-//       // Lưu giỏ hàng vào AsyncStorage
-//       AsyncStorage.setItem('cart', JSON.stringify(state.items));
-//     },
-//     removeFromCart: (state, action) => {
-//       state.items = state.items.filter((item) => item.id !== action.payload.id);
+const getCartItems = async () => {
+  try {
+    const storedCartItems = await AsyncStorage.getItem(KEY_CART_ITEMS);
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  } catch (error) {
+    console.error("Error loading cart items:", error);
+    return [];
+  }
+};
 
-//       // Xóa giỏ hàng khỏi AsyncStorage
-//       AsyncStorage.removeItem('cart');
+const saveCartItems = async (cartItems) => {
+  try {
+    await AsyncStorage.setItem(KEY_CART_ITEMS, JSON.stringify(cartItems));
+  } catch (error) {
+    console.error("Error saving cart items:", error);
+  }
+};
 
-//       // Lưu giỏ hàng mới vào AsyncStorage
-//       AsyncStorage.setItem('cart', JSON.stringify(state.items));
-//     },
-//     increaseCount: (state, action) => {
-//       state.items = state.items.map((item) => {
-//         if (item.id === action.payload.id) {
-//           item.count++;
-//         }
-//         return item;
-//       });
+const addToCart = async (productId, quantity, price) => {
+  console.log(productId);
+  try {
+    const cartItems = await getCartItems();
+    const existingItemIndex = cartItems.findIndex(
+      (cartItem) => cartItem.id === productId
+    );
+    if (existingItemIndex !== -1) {
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[existingItemIndex].count += quantity;
+      await saveCartItems(updatedCartItems);
+    } else {
+      const updatedCartItems = [
+        ...cartItems,
+        { id: productId, count: quantity, price },
+      ];
+      await saveCartItems(updatedCartItems);
+    }
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+  }
+};
 
-//       // Lưu giỏ hàng mới vào AsyncStorage
-//       AsyncStorage.setItem('cart', JSON.stringify(state.items));
-//     },
-//     decreaseCount: (state, action) => {
-//       state.items = state.items.map((item) => {
-//         if (item.id === action.payload.id && item.count > 1) {
-//           item.count--;
-//         }
-//         return item;
-//       });
+const removeFromCart = async (productId) => {
+  try {
+    const cartItems = await getCartItems();
+    const updatedCartItems = cartItems.filter((item) => item.id !== productId);
+    await saveCartItems(updatedCartItems);
+  } catch (error) {
+    console.error("Error removing from cart:", error);
+  }
+};
 
-//       // Lưu giỏ hàng mới vào AsyncStorage
-//       AsyncStorage.setItem('cart', JSON.stringify(state.items));
-//     },
-//   },
-// });
+const increaseCount = async (productId) => {
+  try {
+    const cartItems = await getCartItems();
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === productId ? { ...item, count: item.count + 1 } : item
+    );
+    await saveCartItems(updatedCartItems);
+  } catch (error) {
+    console.error("Error increasing count:", error);
+  }
+};
 
-// export const {
-//   addToCart,
-//   removeFromCart,
-//   increaseCount,
-//   decreaseCount
-// } = cartSlice.actions;
-// export default cartSlice.reducer;
+const decreaseCount = async (productId) => {
+  try {
+    const cartItems = await getCartItems();
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === productId
+        ? { ...item, count: Math.max(0, item.count - 1) }
+        : item
+    );
+    const filteredCartItems = updatedCartItems.filter((item) => item.count > 0);
+    await saveCartItems(filteredCartItems);
+  } catch (error) {
+    console.error("Error decreasing count:", error);
+  }
+};
+
+export {
+  addToCart,
+  removeFromCart,
+  increaseCount,
+  decreaseCount,
+  getCartItems,
+};

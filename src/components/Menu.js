@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="HomeStack" component={HomeScreen} />
       <Stack.Screen name="Details" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
