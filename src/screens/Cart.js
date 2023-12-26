@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { getCartItems, removeFromCart, increaseCount, decreaseCount } from "../Cart/cartSlice";
 import Item from "./Cart/Item";
 
@@ -53,6 +53,7 @@ const Cart = () => {
         <Text style={styles.emptyText}>Chưa thêm sản phẩm</Text>
       ) : (
         <>
+        <ScrollView>
           {cartItems.map((item, index) => (
             <Item
               key={index}
@@ -62,10 +63,11 @@ const Cart = () => {
               onRemoveFromCart={() => handleRemoveFromCart(item.id)}
             />
           ))}
+          </ScrollView>
           <View style={styles.totalContainer}>
             <Text style={styles.totalText}>Total: $</Text>
           </View>
-        </>
+        </>  
       )}
     </View>
   );
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     flex: 1,
     padding: 10,
+    backgroundColor:'#E8E8E8'
   },
   emptyText: {
     fontSize: 16,
@@ -83,10 +86,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   totalContainer: {
-    borderTopWidth: 1,
+    borderTopWidth: 3,
     borderColor: "#ddd",
     paddingVertical: 10,
-    alignItems: "flex-start",
+    justifyContent: 'flex-end',
   },
   totalText: {
     fontSize: 18,
