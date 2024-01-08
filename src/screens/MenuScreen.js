@@ -1,8 +1,6 @@
 // ProfileScreen.js
 import React from 'react';
 import { View, Text } from 'react-native';
-import Icon from '@mdi/react';
-import { mdiHomeVariantOutline } from '@mdi/js';
 import Header from '../components/Header';
 
 const MenuScreen = () => {

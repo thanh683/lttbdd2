@@ -63,10 +63,7 @@ const Cart = () => {
               onRemoveFromCart={() => handleRemoveFromCart(item.id)}
             />
           ))}
-          </ScrollView>
-          <View style={styles.totalContainer}>
-            <Text style={styles.totalText}>Total: $</Text>
-          </View>
+          </ScrollView>          
         </>  
       )}
     </View>

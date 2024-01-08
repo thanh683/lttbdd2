@@ -12,7 +12,7 @@ const Detail = ({ route }) => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${productId}`)
+    fetch(`https://api.escuelajs.co/api/v1/products/${productId}`)
       .then(response => response.json())
       .then(result => setProductDetail(result))
       .catch(error => console.error('Error fetching product detail:', error));
@@ -31,7 +31,7 @@ const Detail = ({ route }) => {
   const renderImageContainer = () => (
     <View style={styles.imageContainer}>
       <Image
-        source={{ uri: productDetail?.image }}
+        source={{ uri: productDetail?.images[0] }}
         style={{
           flex: 1,
           aspectRatio: 16 / 9,

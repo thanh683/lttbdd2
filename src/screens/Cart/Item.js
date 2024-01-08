@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import {
-  decreaseCount,
-  increaseCount,
-  removeFromCart,
-} from "../../Cart/cartSlice";
+import { decreaseCount, increaseCount, removeFromCart } from "../../Cart/cartSlice";
 
 export default function Item({
   item,
@@ -21,52 +10,68 @@ export default function Item({
   onRemoveFromCart,
 }) {
   const [productDetail, setProductDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${item.id}`)
-      .then((response) => response.json())
-      .then((result) => setProductDetail(result))
-      .catch((error) => console.error("Error fetching product detail:", error));
+    const fetchProductDetail = async () => {
+      try {
+        const response = await fetch(`https://api.escuelajs.co/api/v1/products/${item.id}`);
+        const result = await response.json();
+        setProductDetail(result);
+      } catch (error) {
+        console.error("Error fetching product detail:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductDetail();
   }, [item.id]);
 
-  const renderImage = () => (
-    <View style={styles.imageContainer}>
-      <View style={styles.imageWrapper}>
-        <Image
-          source={{ uri: productDetail?.image }}
-          style={styles.productImage}
-          resizeMode="cover"
-        />
+  const renderImage = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#FFA500" />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.imageContainer}>
+        <View style={styles.imageWrapper}>
+          <Image
+            source={{ uri: productDetail?.images[0] }}
+            style={styles.productImage}
+            resizeMode="cover"
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <View>
-      {productDetail != null ? (
-        <View style={styles.itemContainer}>
-          {renderImage()}
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{productDetail.title}</Text>
-            <Text style={{ fontSize:17 }}>
-                 ${item.price} x {item.count} = ${item.price * item.count}
-            </Text>
-            <View style={styles.actionButtons}>
-              <TouchableOpacity onPress={onIncreaseCount}>
-                <Icon name="add" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={onDecreaseCount}>
-                <Icon name="remove" size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={onRemoveFromCart}>
-                <Icon name="delete" size={25} color="red" />
-              </TouchableOpacity>
-            </View>
+      <View style={styles.itemContainer}>
+        {renderImage()}
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{productDetail?.title || "Loading..."}</Text>
+          <Text style={{ fontSize: 17 }}>
+            ${item.price} x {item.count} = ${item.price * item.count}
+          </Text>
+          <View style={styles.actionButtons}>
+            <TouchableOpacity onPress={onIncreaseCount}>
+              <Icon name="add" size={25} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onDecreaseCount}>
+              <Icon name="remove" size={25} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onRemoveFromCart}>
+              <Icon name="delete" size={25} color="red" />
+            </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      </View>
     </View>
   );
 }
@@ -85,13 +90,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   imageWrapper: {
-    borderRadius: 20, // Bán kính bo tròn (đặt là một giá trị lớn để hình ảnh trở nên bo tròn)
+    borderRadius: 20,
     borderColor: "#FFA500",
-    borderWidth: 2, // Độ dày viền đỏ
-    overflow: "hidden", // Ẩn phần hình ảnh vượt ra khỏi khung
+    borderWidth: 2,
+    overflow: "hidden",
   },
   productImage: {
-    width: 100, // Điều chỉnh kích thước hình ảnh theo ý muốn
+    width: 100,
     height: 100,
   },
   textContainer: {
@@ -105,5 +110,11 @@ const styles = StyleSheet.create({
   actionButtons: {
     flexDirection: "row",
     marginTop: 10,
+  },
+  loadingContainer: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

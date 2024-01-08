@@ -16,7 +16,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("https://api.escuelajs.co/api/v1/products?offset=10&limit=10")
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
@@ -32,6 +32,7 @@ const HomeScreen = () => {
     <>
       <ScrollView>
         <Header title="SHOPPE" />
+        
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text
             style={{
@@ -41,7 +42,7 @@ const HomeScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Hot deals
+            Category
           </Text>
           <View
             style={{
@@ -73,7 +74,7 @@ const HomeScreen = () => {
               >
                 <Card style={styles.card}>
                   <Image
-                    source={{ uri: product.image }}
+                    source={{ uri: product.images[0] }}
                     style={styles.productImage}
                   />
                   <Text style={styles.text}>{product.title}</Text>
@@ -111,8 +112,8 @@ const HomeScreen = () => {
                 onPress={() => handleProductPress(product.id)}
               >
                 <Card style={styles.card}>
-                  <Image
-                    source={{ uri: product.image }}
+                <Image
+                    source={{ uri: product.images[0] }}
                     style={styles.productImage}
                   />
                   <Text style={styles.text}>{product.title}</Text>
@@ -148,8 +149,8 @@ const HomeScreen = () => {
                 onPress={() => handleProductPress(product.id)}
               >
                 <Card style={styles.card}>
-                  <Image
-                    source={{ uri: product.image }}
+                <Image
+                    source={{ uri: product.images[0] }}
                     style={styles.productImage}
                   />
                   <Text style={styles.text}>{product.title}</Text>
