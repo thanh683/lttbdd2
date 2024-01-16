@@ -1,4 +1,5 @@
 // Header.js
+<<<<<<< HEAD
 // import React from 'react';
 // import { View, Text, StyleSheet } from 'react-native';
 
@@ -290,3 +291,26 @@ const style = StyleSheet.create({
 });
 
 export default Details;
+=======
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const Content = () => {
+  return (
+    <View style={styles.content}>
+      <Text>This is the Content</Text>
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+    content: {  
+    width: "100%",
+    height:'100px',
+    backgroundColor: '#00FF00',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+});
+
+export default Content;
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7

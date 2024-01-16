@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { getCartItems, removeFromCart, increaseCount, decreaseCount } from "../Cart/cartSlice";
@@ -66,10 +67,23 @@ const Cart = () => {
           </ScrollView>          
         </>  
       )}
+=======
+// Cart.js
+import React from 'react';
+import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const Cart = () => {
+  return (
+    <View>
+      <Text>Cart</Text>
+      <Icon name="person" size={30} color="#000" />
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7
     </View>
   );
 };
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   container: {
     marginTop: 35,
@@ -94,4 +108,6 @@ const styles = StyleSheet.create({
   },
 });
 
+=======
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7
 export default Cart;

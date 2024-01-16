@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, SafeAreaView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -125,12 +126,29 @@ const Detail = ({ route }) => {
           </View>
         </SafeAreaView>
       </ScrollView>
+=======
+// Detail.js
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const Detail = ({ route }) => {
+  const { productId } = route.params;
+
+  // Fetch detailed information for the selected product using productId
+  // ...
+
+  return (
+    <View style={styles.container}>
+      <Text>Details for Product ID: {productId}</Text>
+      {/* Display more details as needed */}
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+<<<<<<< HEAD
     marginTop: 35,
     flex: 1,
     backgroundColor: "#fff",
@@ -198,3 +216,12 @@ const styles = StyleSheet.create({
 });
 
 export default Detail;
+=======
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default Detail;
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7

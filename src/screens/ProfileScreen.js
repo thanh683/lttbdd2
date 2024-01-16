@@ -1,4 +1,5 @@
 // ProfileScreen.js
+<<<<<<< HEAD
 // import React, { useState } from 'react';
 // import { View, Text, Input, Button, TouchableOpacity, StyleSheet } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -77,6 +78,18 @@ const ProfileScreen = () => {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
+=======
+import React from 'react';
+import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const ProfileScreen = () => {
+  return (
+    <View>
+      <Text>Profile Screen</Text>
+      <Icon name="person" size={30} color="#000" />
+    </View>
+>>>>>>> a35083f5ab38f2741a4552ebe1c6dcc9552d6bf7
   );
 };
 
