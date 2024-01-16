@@ -32,7 +32,7 @@ export default function Item({
     if (isLoading) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FFA500" />
+          <ActivityIndicator size="large" color="#AAAAAA" />
         </View>
       );
     }
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     borderRadius: 20,
-    borderColor: "#FFA500",
+    borderColor: "#AAAAAA",
     borderWidth: 2,
     overflow: "hidden",
   },

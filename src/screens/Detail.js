@@ -8,8 +8,9 @@ import { useDispatch } from 'react-redux';
 const Detail = ({ route }) => {
   const { productId } = route.params;
   const [productDetail, setProductDetail] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const navigation = useNavigation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(`https://api.escuelajs.co/api/v1/products/${productId}`)
@@ -47,12 +48,12 @@ const Detail = ({ route }) => {
       <View style={styles.priceTag}>
         {productDetail?.priceSale ? (
           <>
-            <Text style={{ color: "#FFA500", fontWeight: "bold", fontSize: 20 }}>
+            <Text style={{ color: "#AAAAAA", fontWeight: "bold", fontSize: 20 }}>
               ${productDetail.priceSale}
             </Text>
             <Text
               style={{
-                color: "#FFA500",
+                color: "#AAAAAA",
                 fontWeight: "bold",
                 fontSize: 20,
                 textDecorationLine: "line-through",
@@ -62,7 +63,7 @@ const Detail = ({ route }) => {
             </Text>
           </>
         ) : (
-          <Text style={{ color: "#FFA500", fontWeight: "bold", fontSize: 20 }}>
+          <Text style={{ color: "#AAAAAA", fontWeight: "bold", fontSize: 20 }}>
             ${productDetail?.price}
           </Text>
         )}
@@ -82,34 +83,49 @@ const Detail = ({ route }) => {
         >
           {productDetail?.description}
         </Text>
-        <TouchableOpacity onPress={() => addToCart(productDetail?.id, 1, productDetail?.price)}>
-        <View style={styles.buyBtn}>
-          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>ADD TO CART</Text>
+        <View style={styles.quantityContainer}>
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+          >
+            <Text style={styles.quantityButtonText}>-</Text>
+          </TouchableOpacity>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity
+            style={styles.quantityButton}
+            onPress={() => setQuantity(quantity + 1)}
+          >
+            <Text style={styles.quantityButtonText}>+</Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => dispatch(addToCart(productDetail?.id, quantity, productDetail?.price))}
+        >
+          <View style={styles.buyBtn}>
+            <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>ADD TO CART</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
 
-
-
   return (
     <View style={styles.container}>
-    {renderHeader()}
-    <ScrollView>
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-        }}
-      >
-        <View>
-          {renderImageContainer()}
-          {renderDetailsContainer()}
-        </View>
-      </SafeAreaView>
-    </ScrollView>
-  </View>
+      {renderHeader()}
+      <ScrollView>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+          }}
+        >
+          <View>
+            {renderImageContainer()}
+            {renderDetailsContainer()}
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -120,19 +136,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+  paddingVertical: 10,
     backgroundColor: "rgba(237, 237, 237, 0.8)",
     position: "absolute",
     width: "100%",
-    zIndex: 2, // Try increasing the zIndex
+    zIndex: 2,
   },
   imageContainer: {
     flex: 1,
-    marginTop: 50,    
+    marginTop: 50,
   },
   detailsContainer: {
     flex: 0.55,
@@ -149,10 +164,32 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginLeft: 10,
   },
+  quantityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  quantityButton: {
+    width: 30,
+    height: 30,
+    backgroundColor: "#AAAAAA",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+  },
+  quantityButtonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  quantityText: {
+    fontSize: 18,
+    marginHorizontal: 10,
+  },
   buyBtn: {
     width: "100%",
     height: 50,
-    backgroundColor: "#FFA500",
+    backgroundColor: "#AAAAAA",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,

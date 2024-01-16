@@ -59,7 +59,7 @@ const RegisterScreen = ({ navigation }) => {
       <Button
         title="Đăng Ký"
         onPress={handleRegister}
-        buttonStyle={{ backgroundColor: '#FFA500' }}
+        buttonStyle={{ backgroundColor: '#AAAAAA' }}
       />
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.linkText}>Đã có tài khoản? Đăng nhập ngay!</Text>

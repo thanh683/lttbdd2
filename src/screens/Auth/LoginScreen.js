@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         secureTextEntry
       />
-      <Button buttonStyle={{ backgroundColor: "#FFA500" }} title="Đăng Nhập" onPress={handleLogin} />
+      <Button buttonStyle={{ backgroundColor: "#AAAAAA" }} title="Đăng Nhập" onPress={handleLogin} />
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.linkText}>Chưa có tài khoản? Đăng ký ngay!</Text>
       </TouchableOpacity>

@@ -8,7 +8,7 @@ const Header = ({ title }) => {
 
   return (
     <HeaderRNE
-      backgroundColor="#FFA500"
+      backgroundColor="#AAAAAA"
       containerStyle={{
         position: 'absolute',
         top: 0,

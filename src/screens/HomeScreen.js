@@ -16,7 +16,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch("https://api.escuelajs.co/api/v1/products?offset=10&limit=10")
+    fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=10")
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
@@ -32,7 +32,7 @@ const HomeScreen = () => {
     <>
       <ScrollView>
         <Header title="SHOPPE" />
-        
+
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text
             style={{
@@ -58,11 +58,7 @@ const HomeScreen = () => {
           </View>
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
-        >
+        
           <View style={styles.container}>
             {products.map((product) => (
               <TouchableOpacity
@@ -80,107 +76,18 @@ const HomeScreen = () => {
                   <Text style={styles.text}>{product.title}</Text>
                   <Text style={styles.productPrice}>
                     Price: ${product.price}
-                  </Text>
-                  <Button
-                    icon={
-                      <Icon
-                        name="add-shopping-cart"
-                        size={25}
-                        color="#ffffff"
-                      />
-                    }
-                    buttonStyle={styles.buyButton}
-                    title="BUY"
-                  />
+                  </Text>                  
                 </Card>
               </TouchableOpacity>
             ))}
           </View>
         </ScrollView>
-
-        {/* Thêm một ScrollView ngang khác cho sản phẩm của View thứ hai */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
-        >
-          <View style={styles.container}>
-            {products.map((product) => (
-              <TouchableOpacity
-                key={product.id}
-                style={styles.productContainer}
-                onPress={() => handleProductPress(product.id)}
-              >
-                <Card style={styles.card}>
-                <Image
-                    source={{ uri: product.images[0] }}
-                    style={styles.productImage}
-                  />
-                  <Text style={styles.text}>{product.title}</Text>
-                  <Text style={styles.productPrice}>
-                    Price: ${product.price}
-                  </Text>
-                  <Button
-                    icon={
-                      <Icon
-                        name="add-shopping-cart"
-                        size={25}
-                        color="#ffffff"
-                      />
-                    }
-                    buttonStyle={styles.buyButton}
-                    title="BUY"
-                  />
-                </Card>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
-        >
-          <View style={styles.container}>
-            {products.map((product) => (
-              <TouchableOpacity
-                key={product.id}
-                style={styles.productContainer}
-                onPress={() => handleProductPress(product.id)}
-              >
-                <Card style={styles.card}>
-                <Image
-                    source={{ uri: product.images[0] }}
-                    style={styles.productImage}
-                  />
-                  <Text style={styles.text}>{product.title}</Text>
-                  <Text style={styles.productPrice}>
-                    Price: ${product.price}
-                  </Text>
-                  <Button
-                    icon={
-                      <Icon
-                        name="add-shopping-cart"
-                        size={25}
-                        color="#ffffff"
-                      />
-                    }
-                    buttonStyle={styles.buyButton}
-                    title="BUY"
-                  />
-                </Card>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   scrollViewContent: {
-    // Sử dụng justifyContent: 'space-evenly' để giữ khoảng cách giữa các sản phẩm
     justifyContent: "space-evenly",
   },
   container: {
@@ -188,12 +95,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   productContainer: {
-    width: 250, // Đặt chiều rộng theo ý muốn
+    width: "50%",
     height: 250,
-    marginLeft: 10, // Khoảng cách giữa các sản phẩm
+    marginBottom: 50,
   },
   card: {
     flex: 1,
+    color: "red",
   },
   text: {
     color: "black",
@@ -207,8 +115,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150,
   },
-  productPrice: {
-    marginBottom: 10,
+  productPrice: {marginBottom: 10,
     textAlign: "center",
   },
   buyButton: {

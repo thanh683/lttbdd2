@@ -27,17 +27,17 @@ const Menu = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#FFA500',
+        tabBarActiveTintColor: '#AAAAAA',
         tabBarStyle: { height: 60 },
         tabBarLabelStyle: { fontSize: 15 },
       }}
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomeStack}  // Sử dụng HomeStack thay vì HomeScreen
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="home" size={35} color={color} />
+            <Icon name="home-heart" size={35} color={color} />
           ),
           tabBarLabel: 'Home',
         }}
@@ -47,7 +47,7 @@ const Menu = () => {
         component={MenuScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="bell-outline" size={35} color={color} />
+            <Icon name="bell-ring" size={35} color={color} />
           ),
           tabBarLabel: 'Alert',
         }}
@@ -57,7 +57,7 @@ const Menu = () => {
         component={Favorite}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="heart-outline" size={35} color={color} />
+            <Icon name="heart-plus" size={35} color={color} />
           ),
           tabBarLabel: 'Favorite',
         }}
@@ -67,7 +67,7 @@ const Menu = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="account-outline" size={35} color={color} />
+            <Icon name="account-heart" size={35} color={color} />
           ),
           tabBarLabel: 'Profile',
         }}
